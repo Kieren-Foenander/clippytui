@@ -59,6 +59,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	// Handle new clipboard content detected
 	case ClipboardMsg:
+		// #region agent log
+		writeLog("update.go:61", "ClipboardMsg received", map[string]interface{}{"contentLength": len(msg.Content), "currentItemsCount": len(m.items)}, "H6")
+		// #endregion
 		// Calculate max width for preview
 		maxWidth := m.width - 10
 		if maxWidth < 50 {
@@ -67,6 +70,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		// Add the new clipboard item to history
 		// Since we're modifying the slice, we need to assign the returned value
 		m.items = addClipboardItem(m.items, msg.Content, maxWidth)
+		// #region agent log
+		writeLog("update.go:69", "Item added to history", map[string]interface{}{"newItemsCount": len(m.items)}, "H6")
+		// #endregion
 		// Reset cursor to top (most recent item)
 		m.cursor = 0
 		return m, nil
@@ -81,6 +87,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	// Handle errors
 	case ErrorMsg:
+		// #region agent log
+		writeLog("update.go:83", "ErrorMsg received", map[string]interface{}{"error": msg.Err.Error()}, "H1,H2,H5")
+		// #endregion
 		m.status = "Error: " + msg.Err.Error()
 		return m, tea.Tick(3*time.Second, func(time.Time) tea.Msg {
 			return ClearStatusMsg{}

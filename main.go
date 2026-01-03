@@ -20,12 +20,29 @@ func main() {
 
 	// Start the clipboard monitor in a goroutine
 	// This runs concurrently with the TUI, watching for clipboard changes
+	// #region agent log
+	writeLog("main.go:23", "Starting StartMonitor goroutine", map[string]interface{}{}, "H2")
+	// #endregion
 	go StartMonitor(p)
 
 	// Try to get initial clipboard content
 	// This populates the history with whatever is currently in the clipboard
-	if initialContent, err := GetClipboardContent(); err == nil {
+	// #region agent log
+	writeLog("main.go:27", "Getting initial clipboard content", map[string]interface{}{}, "H7")
+	// #endregion
+	initialContent, err := GetClipboardContent()
+	// #region agent log
+	if err != nil {
+		writeLog("main.go:27", "Initial GetClipboardContent failed", map[string]interface{}{"error": err.Error()}, "H7")
+	} else {
+		writeLog("main.go:27", "Initial GetClipboardContent success", map[string]interface{}{"contentLength": len(initialContent), "isEmpty": initialContent == ""}, "H7")
+	}
+	// #endregion
+	if err == nil {
 		if initialContent != "" {
+			// #region agent log
+			writeLog("main.go:30", "Sending initial ClipboardMsg", map[string]interface{}{"contentLength": len(initialContent)}, "H6")
+			// #endregion
 			// Send initial content as a message
 			p.Send(ClipboardMsg{Content: initialContent})
 		}
