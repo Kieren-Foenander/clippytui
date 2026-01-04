@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"os/exec"
 	"strings"
@@ -10,110 +9,65 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 )
 
-// StartMonitor starts monitoring the clipboard for changes.
+// StartMonitor starts monitoring the clipboard for changes using polling.
 // This function runs in a goroutine (think of it as a lightweight thread).
-// Goroutines allow us to do things concurrently without blocking the main program.
+// Instead of using wl-paste --watch (which wasn't working), we poll the clipboard
+// periodically to detect changes.
 func StartMonitor(program *tea.Program) {
 	// #region agent log
-	writeLog("clipboard.go:16", "StartMonitor called", map[string]interface{}{"program": "not nil"}, "H2")
+	writeLog("clipboard.go:16", "StartMonitor called (polling mode)", map[string]interface{}{"program": "not nil"}, "H2")
 	// #endregion
 
-	// Start wl-paste --watch type in a subprocess
-	// This command watches for clipboard changes and outputs the MIME type when it changes
-	cmd := exec.Command("wl-paste", "--watch", "type")
+	// Track the last clipboard content to detect changes
+	lastContent := ""
+	ticker := time.NewTicker(500 * time.Millisecond) // Check every 500ms
+	defer ticker.Stop()
 
 	// #region agent log
-	writeLog("clipboard.go:20", "Command created", map[string]interface{}{"command": "wl-paste --watch type"}, "H1")
+	writeLog("clipboard.go:24", "Starting polling loop", map[string]interface{}{"interval": "500ms"}, "H4")
 	// #endregion
 
-	// Get a pipe to read the command's stdout
-	stdout, err := cmd.StdoutPipe()
-	// #region agent log
-	if err != nil {
-		writeLog("clipboard.go:23", "StdoutPipe failed", map[string]interface{}{"error": err.Error()}, "H2")
-	} else {
-		writeLog("clipboard.go:23", "StdoutPipe success", map[string]interface{}{}, "H2")
-	}
-	// #endregion
-	if err != nil {
-		// If we can't start monitoring, send an error message to the program
-		program.Send(ErrorMsg{Err: fmt.Errorf("failed to create stdout pipe: %w", err)})
-		return
-	}
-
-	// Start the command (non-blocking)
-	err = cmd.Start()
-	// #region agent log
-	if err != nil {
-		writeLog("clipboard.go:30", "Command Start failed", map[string]interface{}{"error": err.Error()}, "H2")
-	} else {
-		writeLog("clipboard.go:30", "Command Start success", map[string]interface{}{"pid": cmd.Process.Pid}, "H2")
-	}
-	// #endregion
-	if err != nil {
-		program.Send(ErrorMsg{Err: fmt.Errorf("failed to start wl-paste: %w", err)})
-		return
-	}
-
-	// Create a scanner to read line-by-line from stdout
-	scanner := bufio.NewScanner(stdout)
-
-	// #region agent log
-	writeLog("clipboard.go:36", "Scanner created, entering scan loop", map[string]interface{}{}, "H3,H4")
-	// #endregion
-
-	// Read lines continuously
-	// When wl-paste detects a clipboard change, it outputs a line
-	scanCount := 0
-	for scanner.Scan() {
-		scanCount++
-		line := scanner.Text()
-		// #region agent log
-		writeLog("clipboard.go:40", "Scanner read line", map[string]interface{}{"line": line, "scanCount": scanCount}, "H3,H4")
-		// #endregion
-
-		// When we detect a change, get the full clipboard content
+	// Poll the clipboard periodically
+	for range ticker.C {
+		// Get current clipboard content
 		content, err := GetClipboardContent()
 		// #region agent log
 		if err != nil {
-			writeLog("clipboard.go:42", "GetClipboardContent failed", map[string]interface{}{"error": err.Error()}, "H5")
-		} else {
-			writeLog("clipboard.go:42", "GetClipboardContent success", map[string]interface{}{"contentLength": len(content), "contentPreview": content[:min(50, len(content))]}, "H5")
+			// Only log errors occasionally to avoid spam
+			if time.Now().Unix()%5 == 0 {
+				writeLog("clipboard.go:32", "GetClipboardContent failed (polling)", map[string]interface{}{"error": err.Error()}, "H5")
+			}
 		}
 		// #endregion
 		if err != nil {
-			program.Send(ErrorMsg{Err: fmt.Errorf("failed to get clipboard content: %w", err)})
+			// Don't spam errors - only send if it's a new type of error
 			continue
 		}
 
-		// Skip empty content
-		trimmed := strings.TrimSpace(content)
-		// #region agent log
-		writeLog("clipboard.go:49", "Content check", map[string]interface{}{"trimmedLength": len(trimmed), "isEmpty": trimmed == ""}, "H8")
-		// #endregion
-		if trimmed == "" {
-			continue
+		// Check if content has changed
+		if content != lastContent {
+			// #region agent log
+			writeLog("clipboard.go:42", "Clipboard content changed", map[string]interface{}{"oldLength": len(lastContent), "newLength": len(content)}, "H4")
+			// #endregion
+
+			// Skip empty content
+			trimmed := strings.TrimSpace(content)
+			// #region agent log
+			writeLog("clipboard.go:47", "Content check", map[string]interface{}{"trimmedLength": len(trimmed), "isEmpty": trimmed == ""}, "H8")
+			// #endregion
+
+			// Update last content (even if empty, to avoid re-triggering)
+			lastContent = content
+
+			if trimmed != "" {
+				// Send a ClipboardMsg to the Bubble Tea program
+				// This message will be received by the Update() function
+				// #region agent log
+				writeLog("clipboard.go:55", "Sending ClipboardMsg (polling)", map[string]interface{}{"contentLength": len(content)}, "H6")
+				// #endregion
+				program.Send(ClipboardMsg{Content: content})
+			}
 		}
-
-		// Send a ClipboardMsg to the Bubble Tea program
-		// This message will be received by the Update() function
-		// #region agent log
-		writeLog("clipboard.go:55", "Sending ClipboardMsg", map[string]interface{}{"contentLength": len(content)}, "H6")
-		// #endregion
-		program.Send(ClipboardMsg{Content: content})
-	}
-
-	// If the scanner encounters an error, report it
-	err = scanner.Err()
-	// #region agent log
-	if err != nil {
-		writeLog("clipboard.go:59", "Scanner error", map[string]interface{}{"error": err.Error(), "scanCount": scanCount}, "H4")
-	} else {
-		writeLog("clipboard.go:59", "Scanner loop exited", map[string]interface{}{"scanCount": scanCount}, "H4")
-	}
-	// #endregion
-	if err != nil {
-		program.Send(ErrorMsg{Err: fmt.Errorf("scanner error: %w", err)})
 	}
 }
 
