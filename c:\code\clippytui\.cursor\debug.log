@@ -1,0 +1,47 @@
+{"data":{},"hypothesisId":"H2","location":"main.go:23","message":"Starting StartMonitor goroutine","runId":"run1","sessionId":"debug-session","timestamp":1767493872180}
+{"data":{},"hypothesisId":"H7","location":"main.go:27","message":"Getting initial clipboard content","runId":"run1","sessionId":"debug-session","timestamp":1767493872180}
+{"data":{},"hypothesisId":"H5","location":"clipboard.go:66","message":"GetClipboardContent called","runId":"run1","sessionId":"debug-session","timestamp":1767493872180}
+{"data":{"command":"wl-paste --no-newline"},"hypothesisId":"H1,H5","location":"clipboard.go:69","message":"wl-paste command created","runId":"run1","sessionId":"debug-session","timestamp":1767493872180}
+{"data":{"program":"not nil"},"hypothesisId":"H2","location":"clipboard.go:16","message":"StartMonitor called","runId":"run1","sessionId":"debug-session","timestamp":1767493872180}
+{"data":{"command":"wl-paste --watch type"},"hypothesisId":"H1","location":"clipboard.go:20","message":"Command created","runId":"run1","sessionId":"debug-session","timestamp":1767493872180}
+{"data":{},"hypothesisId":"H2","location":"clipboard.go:23","message":"StdoutPipe success","runId":"run1","sessionId":"debug-session","timestamp":1767493872180}
+{"data":{"pid":29397},"hypothesisId":"H2","location":"clipboard.go:30","message":"Command Start success","runId":"run1","sessionId":"debug-session","timestamp":1767493872181}
+{"data":{},"hypothesisId":"H3,H4","location":"clipboard.go:36","message":"Scanner created, entering scan loop","runId":"run1","sessionId":"debug-session","timestamp":1767493872181}
+{"data":{"outputLength":69},"hypothesisId":"H5","location":"clipboard.go:70","message":"wl-paste Output success","runId":"run1","sessionId":"debug-session","timestamp":1767493872207}
+{"data":{"contentLength":69,"isEmpty":false},"hypothesisId":"H7","location":"main.go:27","message":"Initial GetClipboardContent success","runId":"run1","sessionId":"debug-session","timestamp":1767493872207}
+{"data":{"contentLength":69},"hypothesisId":"H6","location":"main.go:30","message":"Sending initial ClipboardMsg","runId":"run1","sessionId":"debug-session","timestamp":1767493872207}
+{"data":{},"hypothesisId":"H2","location":"main.go:23","message":"Starting StartMonitor goroutine","runId":"run1","sessionId":"debug-session","timestamp":1767493912273}
+{"data":{},"hypothesisId":"H7","location":"main.go:27","message":"Getting initial clipboard content","runId":"run1","sessionId":"debug-session","timestamp":1767493912273}
+{"data":{},"hypothesisId":"H5","location":"clipboard.go:66","message":"GetClipboardContent called","runId":"run1","sessionId":"debug-session","timestamp":1767493912273}
+{"data":{"program":"not nil"},"hypothesisId":"H2","location":"clipboard.go:16","message":"StartMonitor called","runId":"run1","sessionId":"debug-session","timestamp":1767493912273}
+{"data":{"command":"wl-paste --no-newline"},"hypothesisId":"H1,H5","location":"clipboard.go:69","message":"wl-paste command created","runId":"run1","sessionId":"debug-session","timestamp":1767493912273}
+{"data":{"command":"wl-paste --watch type"},"hypothesisId":"H1","location":"clipboard.go:20","message":"Command created","runId":"run1","sessionId":"debug-session","timestamp":1767493912273}
+{"data":{},"hypothesisId":"H2","location":"clipboard.go:23","message":"StdoutPipe success","runId":"run1","sessionId":"debug-session","timestamp":1767493912273}
+{"data":{"pid":29761},"hypothesisId":"H2","location":"clipboard.go:30","message":"Command Start success","runId":"run1","sessionId":"debug-session","timestamp":1767493912274}
+{"data":{},"hypothesisId":"H3,H4","location":"clipboard.go:36","message":"Scanner created, entering scan loop","runId":"run1","sessionId":"debug-session","timestamp":1767493912274}
+{"data":{"outputLength":69},"hypothesisId":"H5","location":"clipboard.go:70","message":"wl-paste Output success","runId":"run1","sessionId":"debug-session","timestamp":1767493912292}
+{"data":{"contentLength":69,"isEmpty":false},"hypothesisId":"H7","location":"main.go:27","message":"Initial GetClipboardContent success","runId":"run1","sessionId":"debug-session","timestamp":1767493912292}
+{"data":{"contentLength":69},"hypothesisId":"H6","location":"main.go:30","message":"Sending initial ClipboardMsg","runId":"run1","sessionId":"debug-session","timestamp":1767493912292}
+{"data":{},"hypothesisId":"H2","location":"main.go:23","message":"Starting StartMonitor goroutine","runId":"run1","sessionId":"debug-session","timestamp":1767494082988}
+{"data":{},"hypothesisId":"H7","location":"main.go:27","message":"Getting initial clipboard content","runId":"run1","sessionId":"debug-session","timestamp":1767494082989}
+{"data":{},"hypothesisId":"H5","location":"clipboard.go:66","message":"GetClipboardContent called","runId":"run1","sessionId":"debug-session","timestamp":1767494082989}
+{"data":{"command":"wl-paste --no-newline"},"hypothesisId":"H1,H5","location":"clipboard.go:69","message":"wl-paste command created","runId":"run1","sessionId":"debug-session","timestamp":1767494082989}
+{"data":{"program":"not nil"},"hypothesisId":"H2","location":"clipboard.go:16","message":"StartMonitor called","runId":"run1","sessionId":"debug-session","timestamp":1767494082989}
+{"data":{"command":"wl-paste --watch type"},"hypothesisId":"H1","location":"clipboard.go:20","message":"Command created","runId":"run1","sessionId":"debug-session","timestamp":1767494082990}
+{"data":{},"hypothesisId":"H2","location":"clipboard.go:23","message":"StdoutPipe success","runId":"run1","sessionId":"debug-session","timestamp":1767494082990}
+{"data":{"pid":31011},"hypothesisId":"H2","location":"clipboard.go:30","message":"Command Start success","runId":"run1","sessionId":"debug-session","timestamp":1767494082991}
+{"data":{},"hypothesisId":"H3,H4","location":"clipboard.go:36","message":"Scanner created, entering scan loop","runId":"run1","sessionId":"debug-session","timestamp":1767494082991}
+{"data":{"outputLength":69},"hypothesisId":"H5","location":"clipboard.go:70","message":"wl-paste Output success","runId":"run1","sessionId":"debug-session","timestamp":1767494083009}
+{"data":{"contentLength":69,"isEmpty":false},"hypothesisId":"H7","location":"main.go:27","message":"Initial GetClipboardContent success","runId":"run1","sessionId":"debug-session","timestamp":1767494083010}
+{"data":{"contentLength":69},"hypothesisId":"H6","location":"main.go:30","message":"Sending initial ClipboardMsg","runId":"run1","sessionId":"debug-session","timestamp":1767494083010}
+{"data":{},"hypothesisId":"H2","location":"main.go:23","message":"Starting StartMonitor goroutine","runId":"run1","sessionId":"debug-session","timestamp":1767494150424}
+{"data":{},"hypothesisId":"H7","location":"main.go:27","message":"Getting initial clipboard content","runId":"run1","sessionId":"debug-session","timestamp":1767494150424}
+{"data":{},"hypothesisId":"H5","location":"clipboard.go:66","message":"GetClipboardContent called","runId":"run1","sessionId":"debug-session","timestamp":1767494150424}
+{"data":{"program":"not nil"},"hypothesisId":"H2","location":"clipboard.go:16","message":"StartMonitor called","runId":"run1","sessionId":"debug-session","timestamp":1767494150424}
+{"data":{"command":"wl-paste --no-newline"},"hypothesisId":"H1,H5","location":"clipboard.go:69","message":"wl-paste command created","runId":"run1","sessionId":"debug-session","timestamp":1767494150424}
+{"data":{"command":"wl-paste --watch type"},"hypothesisId":"H1","location":"clipboard.go:20","message":"Command created","runId":"run1","sessionId":"debug-session","timestamp":1767494150424}
+{"data":{},"hypothesisId":"H2","location":"clipboard.go:23","message":"StdoutPipe success","runId":"run1","sessionId":"debug-session","timestamp":1767494150424}
+{"data":{"pid":31506},"hypothesisId":"H2","location":"clipboard.go:30","message":"Command Start success","runId":"run1","sessionId":"debug-session","timestamp":1767494150424}
+{"data":{},"hypothesisId":"H3,H4","location":"clipboard.go:36","message":"Scanner created, entering scan loop","runId":"run1","sessionId":"debug-session","timestamp":1767494150424}
+{"data":{"error":"exit status 1"},"hypothesisId":"H1,H5","location":"clipboard.go:70","message":"wl-paste Output failed","runId":"run1","sessionId":"debug-session","timestamp":1767494150442}
+{"data":{"error":"wl-paste failed: exit status 1"},"hypothesisId":"H7","location":"main.go:27","message":"Initial GetClipboardContent failed","runId":"run1","sessionId":"debug-session","timestamp":1767494150442}
